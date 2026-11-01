@@ -3,17 +3,17 @@ package com.example.multi_vendor_ecommerce_api.controllers;
 import com.example.multi_vendor_ecommerce_api.Response.Response;
 import com.example.multi_vendor_ecommerce_api.Response.SuccessResponse;
 import com.example.multi_vendor_ecommerce_api.dtos.AccountCreationDto;
+import com.example.multi_vendor_ecommerce_api.dtos.PasswordUpdateDto;
 import com.example.multi_vendor_ecommerce_api.dtos.UsersResponse;
 import com.example.multi_vendor_ecommerce_api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -41,11 +41,28 @@ public class UserController {
                 .body(userService.getUserById(id));
     }
 
-    @PatchMapping("/api/users/{id}")
-    public ResponseEntity<Response> updateUserById(@PathVariable Long id, AccountCreationDto updatedUser) {
+    //this is the endpoint to edit the email
+    @PatchMapping("/api/users/email/{id}")
+    public ResponseEntity<Response> updateEmail(@PathVariable Long id, @RequestBody AccountCreationDto newEmail) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userService.updateUserById(id,updatedUser));
+                .body(userService.updateEmail(id,newEmail));
+    }
+
+
+    @PatchMapping("/api/users/password/{id}")
+    public ResponseEntity<Response> updatePassword(@PathVariable Long id, @RequestBody PasswordUpdateDto newPassword) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.updatePassword(id,newPassword));
+    }
+
+
+    @PatchMapping("/api/users/username/{id}")
+    public ResponseEntity<Response> updateUsername(@PathVariable Long id, @RequestBody AccountCreationDto newUsername) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.updateUsername(id,newUsername));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.multi_vendor_ecommerce_api.services;
 
+
 import com.example.multi_vendor_ecommerce_api.Response.Response;
 import com.example.multi_vendor_ecommerce_api.Response.SuccessResponse;
 import com.example.multi_vendor_ecommerce_api.dtos.AccountCreationDto;
@@ -13,11 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -88,14 +90,14 @@ public class UserService {
     public Response updatePassword(Long id, PasswordUpdateDto newPassword) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(()-> new UserDoestNotExist("this user does not exist"));
+                .orElseThrow(() -> new UserDoestNotExist("this user does not exist"));
 
         String password = newPassword.password();
-        if (password == null || password.isBlank()){
+        if (password == null || password.isBlank()) {
             throw new BlankRole("empty fields please try again");
         }
-        if (password.length() < 6){
-            throw new  InvalidPasswordRuntimeException("invalid password please try again");
+        if (password.length() < 6) {
+            throw new InvalidPasswordRuntimeException("invalid password please try again");
         }
 
         user.setPassword(password);
@@ -112,28 +114,62 @@ public class UserService {
 
         //first check if the user exists in the database by the id
         User user = userRepository.findById(id)
-                .orElseThrow(()-> new UserDoestNotExist("this user does not exist"));
+                .orElseThrow(() -> new UserDoestNotExist("this user does not exist"));
 
         // now we will do the proper authentication and the bussiness logic
         String username = newUsername.username();
 
-        if (username == null ||username.isBlank() ){
+        if (username == null || username.isBlank()) {
             throw new BlankFieldException("blank field please try again");
         }
-        if (userRepository.findByUsername(username).isPresent()){
+        if (userRepository.findByUsername(username).isPresent()) {
             //how do they do that feature that helps suggests user
-            throw new  UserNameAlreadyExists(username +" already owned by a user try another one");
+            throw new UserNameAlreadyExists(username + " already owned by a user try another one");
         }
 
         user.setUsername(username);
         userRepository.save(user);
 
-       return  SuccessResponse
+        return SuccessResponse
                 .builder()
-               .timeStamp(LocalDateTime.now())
-               .statusCode(HttpStatus.OK.value())
-               .message("username updated successfully")
+                .timeStamp(LocalDateTime.now())
+                .statusCode(HttpStatus.OK.value())
+                .message("username updated successfully")
                 .build();
+    }
+
+    public Response updateProfile(Long id, Map<String, Object> newUserUpdate) {
+
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new UserDoestNotExist("user does not exist please try again"));
+        newUserUpdate.forEach((key, value) -> {
+
+            Field field = ReflectionUtils.findField(User.class, key);
+
+            if (field != null) {
+                field.setAccessible(true);
+
+                ReflectionUtils.setField(field, existingUser, value);
+            }
+
+        });
+        userRepository.save(existingUser);
+
+        return SuccessResponse
+                .builder()
+                .timeStamp(LocalDateTime.now())
+                .statusCode(HttpStatus.OK.value())
+                .message("username updated successfully")
+                .build();
+    }
+
+    public Response deleteUser(Long id) {
+        //if the user is present delete the user account if not throw an error
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+        }
+        throw new UserDoestNotExist("this user does not exist please try again");
+
     }
 
     //this is to update the username

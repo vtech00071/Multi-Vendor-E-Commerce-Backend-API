@@ -6,7 +6,6 @@ import com.example.multi_vendor_ecommerce_api.dtos.AccountCreationDto;
 import com.example.multi_vendor_ecommerce_api.dtos.PasswordUpdateDto;
 import com.example.multi_vendor_ecommerce_api.dtos.UsersResponse;
 import com.example.multi_vendor_ecommerce_api.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -64,5 +63,24 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(userService.updateUsername(id,newUsername));
     }
+
+    //this is the dynamic merge
+    @PatchMapping("/api/users/{id}")
+    public ResponseEntity<Response> updateProfile(@PathVariable Long id, @RequestBody Map<String , Object> newUserUpdate) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.updateProfile(id,newUserUpdate));
+    }
+
+
+    @DeleteMapping("/api/users/{id} ")
+    public ResponseEntity<Response> updateProfile(@PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.deleteUser(id));
+    }
+
+
+
 
 }

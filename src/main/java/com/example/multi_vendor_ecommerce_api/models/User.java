@@ -2,9 +2,7 @@ package com.example.multi_vendor_ecommerce_api.models;
 
 import com.example.multi_vendor_ecommerce_api.enums.Roles;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,7 +10,8 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class User {
     @Id
@@ -64,4 +63,8 @@ public class User {
     @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime lastModified;
+
+
+    @OneToOne(mappedBy = "vendor")
+    private VendorStore vendorStore;
 }

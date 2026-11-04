@@ -1,7 +1,7 @@
 package com.example.multi_vendor_ecommerce_api.mappers;
 
 import com.example.multi_vendor_ecommerce_api.dtos.StoreRegistrationDto;
-import com.example.multi_vendor_ecommerce_api.models.VendorStore;
+import com.example.multi_vendor_ecommerce_api.entity.VendorStore;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

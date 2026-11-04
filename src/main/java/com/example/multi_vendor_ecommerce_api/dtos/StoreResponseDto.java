@@ -5,6 +5,8 @@ import lombok.Builder;
 @Builder
 public record  StoreResponseDto(
         String name ,
-        String description
+        String description,
+        UsersResponse vendor
+
 ) {
 }

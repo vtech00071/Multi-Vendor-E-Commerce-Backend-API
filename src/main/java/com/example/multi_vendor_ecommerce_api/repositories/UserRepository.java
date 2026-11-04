@@ -1,6 +1,6 @@
 package com.example.multi_vendor_ecommerce_api.repositories;
 
-import com.example.multi_vendor_ecommerce_api.models.User;
+import com.example.multi_vendor_ecommerce_api.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

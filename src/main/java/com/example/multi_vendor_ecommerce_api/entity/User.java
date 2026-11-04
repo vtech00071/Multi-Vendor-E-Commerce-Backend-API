@@ -1,13 +1,18 @@
-package com.example.multi_vendor_ecommerce_api.models;
+package com.example.multi_vendor_ecommerce_api.entity;
 
 import com.example.multi_vendor_ecommerce_api.enums.Roles;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
+@Component
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -64,7 +69,7 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime lastModified;
 
-
+    @JsonBackReference
     @OneToOne(mappedBy = "vendor")
     private VendorStore vendorStore;
 }

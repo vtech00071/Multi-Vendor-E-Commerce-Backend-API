@@ -7,7 +7,7 @@ import com.example.multi_vendor_ecommerce_api.dtos.LoginRequestDto;
 import com.example.multi_vendor_ecommerce_api.enums.Roles;
 import com.example.multi_vendor_ecommerce_api.exceptions.*;
 import com.example.multi_vendor_ecommerce_api.mappers.AccountCreationDtoMapper;
-import com.example.multi_vendor_ecommerce_api.models.User;
+import com.example.multi_vendor_ecommerce_api.entity.User;
 import com.example.multi_vendor_ecommerce_api.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;

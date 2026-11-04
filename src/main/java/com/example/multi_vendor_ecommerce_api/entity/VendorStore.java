@@ -1,5 +1,6 @@
-package com.example.multi_vendor_ecommerce_api.models;
+package com.example.multi_vendor_ecommerce_api.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,8 +39,10 @@ public class VendorStore {
     private String description;
     //this is the owing side so it will carry the foreign key
     //that means its the vendor that will carry the foreign key
+
     @OneToOne
     @JoinColumn(name = "vendor_id" , referencedColumnName = "id")
+    @JsonManagedReference
     private User vendor;
 
     //this is the time stamp for when it was created

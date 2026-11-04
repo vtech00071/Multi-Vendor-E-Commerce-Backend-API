@@ -3,14 +3,16 @@ package com.example.multi_vendor_ecommerce_api.services;
 import com.example.multi_vendor_ecommerce_api.Response.Response;
 import com.example.multi_vendor_ecommerce_api.dtos.StoreRegistrationDto;
 import com.example.multi_vendor_ecommerce_api.dtos.StoreResponseDto;
+import com.example.multi_vendor_ecommerce_api.dtos.UsersResponse;
 import com.example.multi_vendor_ecommerce_api.enums.Roles;
 import com.example.multi_vendor_ecommerce_api.exceptions.BlankFieldException;
 import com.example.multi_vendor_ecommerce_api.exceptions.ForbiddenException;
 import com.example.multi_vendor_ecommerce_api.exceptions.UserDoestNotExist;
 import com.example.multi_vendor_ecommerce_api.mappers.StoreRegistrationDtoMapper;
 import com.example.multi_vendor_ecommerce_api.mappers.StoreResponseDtoMapper;
-import com.example.multi_vendor_ecommerce_api.models.User;
-import com.example.multi_vendor_ecommerce_api.models.VendorStore;
+import com.example.multi_vendor_ecommerce_api.entity.User;
+import com.example.multi_vendor_ecommerce_api.entity.VendorStore;
+import com.example.multi_vendor_ecommerce_api.mappers.UserDtoMapper;
 import com.example.multi_vendor_ecommerce_api.repositories.StoreRepository;
 import com.example.multi_vendor_ecommerce_api.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -35,6 +37,7 @@ public class StoreService {
     private final StoreRegistrationDtoMapper storeRegistrationDtoMapper;
     private final VendorStore vendorStore;
     private final StoreResponseDtoMapper storeResponseDtoMapper;
+    private final UserDtoMapper userDtoMapper;
 
     public Response registerStore(StoreRegistrationDto storeRegistrationDto) {
 
@@ -59,8 +62,8 @@ public class StoreService {
         //that later its one of the feature that i want us to make sure that we need
 
         vendorStore.setVendor(user);
-        vendorStore.setName(storeRegistrationDto.description());
-        vendorStore.setDescription(storeRegistrationDto.name());
+        vendorStore.setName(storeRegistrationDto.name());
+        vendorStore.setDescription(storeRegistrationDto.description());
 
 
         storeRepository.save(vendorStore);
@@ -74,9 +77,12 @@ public class StoreService {
     }
 
     public List<StoreResponseDto> getAllStores() {
+
         return storeRepository
                 .findAll()
                 .stream()
                 .map(storeResponseDtoMapper).toList();
     }
+
+
 }

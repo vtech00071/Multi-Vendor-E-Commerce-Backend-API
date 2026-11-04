@@ -8,7 +8,7 @@ import com.example.multi_vendor_ecommerce_api.dtos.PasswordUpdateDto;
 import com.example.multi_vendor_ecommerce_api.dtos.UsersResponse;
 import com.example.multi_vendor_ecommerce_api.exceptions.*;
 import com.example.multi_vendor_ecommerce_api.mappers.UserDtoMapper;
-import com.example.multi_vendor_ecommerce_api.models.User;
+import com.example.multi_vendor_ecommerce_api.entity.User;
 import com.example.multi_vendor_ecommerce_api.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,7 +2,7 @@ package com.example.multi_vendor_ecommerce_api.mappers;
 
 import com.example.multi_vendor_ecommerce_api.dtos.AccountCreationDto;
 import com.example.multi_vendor_ecommerce_api.enums.Roles;
-import com.example.multi_vendor_ecommerce_api.models.User;
+import com.example.multi_vendor_ecommerce_api.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;

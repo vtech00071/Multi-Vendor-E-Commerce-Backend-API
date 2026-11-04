@@ -26,7 +26,7 @@ public class UserController {
 
 
     //what this method will do is that it will return all the users and their roles
-    @GetMapping("/api/auth/login")
+    @GetMapping("/api/users")
     public ResponseEntity<List<UsersResponse>> getUsers() {
         return ResponseEntity
                 .status(HttpStatus.OK)

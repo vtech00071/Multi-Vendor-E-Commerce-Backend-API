@@ -2,11 +2,13 @@ package com.example.multi_vendor_ecommerce_api.services;
 
 import com.example.multi_vendor_ecommerce_api.Response.Response;
 import com.example.multi_vendor_ecommerce_api.dtos.StoreRegistrationDto;
+import com.example.multi_vendor_ecommerce_api.dtos.StoreResponseDto;
 import com.example.multi_vendor_ecommerce_api.enums.Roles;
 import com.example.multi_vendor_ecommerce_api.exceptions.BlankFieldException;
 import com.example.multi_vendor_ecommerce_api.exceptions.ForbiddenException;
 import com.example.multi_vendor_ecommerce_api.exceptions.UserDoestNotExist;
 import com.example.multi_vendor_ecommerce_api.mappers.StoreRegistrationDtoMapper;
+import com.example.multi_vendor_ecommerce_api.mappers.StoreResponseDtoMapper;
 import com.example.multi_vendor_ecommerce_api.models.User;
 import com.example.multi_vendor_ecommerce_api.models.VendorStore;
 import com.example.multi_vendor_ecommerce_api.repositories.StoreRepository;
@@ -14,7 +16,6 @@ import com.example.multi_vendor_ecommerce_api.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class StoreService {
     private final UserRepository userRepository;
     private final StoreRegistrationDtoMapper storeRegistrationDtoMapper;
     private final VendorStore vendorStore;
+    private final StoreResponseDtoMapper storeResponseDtoMapper;
 
     public Response registerStore(StoreRegistrationDto storeRegistrationDto) {
 
@@ -69,5 +71,12 @@ public class StoreService {
                 .timeStamp(LocalDateTime.now())
                 .build();
 
+    }
+
+    public List<StoreResponseDto> getAllStores() {
+        return storeRepository
+                .findAll()
+                .stream()
+                .map(storeResponseDtoMapper).toList();
     }
 }

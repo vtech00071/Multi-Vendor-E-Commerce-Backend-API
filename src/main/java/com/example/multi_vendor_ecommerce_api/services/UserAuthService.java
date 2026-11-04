@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 //what this data does is getters and setters
 @Data
-public class AuthService {
+public class UserAuthService {
     static Response successResponse = SuccessResponse
             .builder()
             .message("success")
